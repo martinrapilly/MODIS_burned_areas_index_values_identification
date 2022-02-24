@@ -2,7 +2,6 @@
 #Description: applies 625 combintations of index value tresholds on MODIS imagery; confusion matrix produced after that with another script to get the best combination
 #Works on Python 3 with numpy and osgeo libraries; images must be stored in separated subfolders per protected area, in one common folder
 #Author: Martin Rapilly
-#warning:PIL (pillow library) reads NaN as -32768
 
 #imports libraries
 import os, sys, math, time, datetime
@@ -98,7 +97,7 @@ for dNBRthreshold in listdNBRthreshold:
                                 band1Image1asArray = band1Image1.ReadAsArray()
                                 band6Image1asArray = band6Image1.ReadAsArray()
                                 
-                                #if pixel has no value, doesn´t do anything and skips
+                                #if pixel has no value, doesnÂ´t do anything and skips
                                 #warning: -28772 can appear in band 6 sometimes instead of No Value
                                 if math.isnan(band1Image1asArray[row][col])or band1Image1asArray[row][col]==-32768 or band1Image1asArray[row][col]==0.0 or band6Image1asArray[row][col]==-28672:
                                     print("row number: ", row)
