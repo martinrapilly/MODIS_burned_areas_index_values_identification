@@ -24,10 +24,10 @@ log = open("F:/.../myprog.log", "a")
 sys.stdout = log
 
 #defines 5 tresholds for all four index used: dNBR, NBR and NDVI difference (ratio NDVIafter/NDVIbefore); for NBR and RdNBR, SWIR3 is used
-listdNBRthreshold=[0.3105,0.388,0.2328,0.4657,0.1552]
-listRdNBRthreshold=[0.2215,0.2768,0.166,0.3321,0.1107]
-listNDVIdiffThreshold=[0.062725,0.0940875,0.1255,0.1558125, 0.188175]
-listratioB5Threshold=[1.1754,1.4691,0.8815,1.763,0.5876]
+listdNBRthreshold=[0.408,0.3105,0.252,0.213,0.174,0.1155,0.01807]
+listRdNBRthreshold=[0.0207,0.1586,0.2414,0.2966,0.3517,0.4344,0.5724]
+listNDVIdiffThreshold=[0.0112,0.0599,0.0892,0.1086,0.1281,0.1573,0.206]
+listratioB5Threshold=[0.9148,0.9787,1.0427,1.1065,1.1705]
 
 #loops to iterate with each threshold (625 iterations in total)
 for dNBRthreshold in listdNBRthreshold:
@@ -226,14 +226,14 @@ for dNBRthreshold in listdNBRthreshold:
                                                 if dNBR==0:
                                                     print("same image for image 1 and image2; initiating with another image for image 2")
                                                 #if dNBR, NBR or NDVI difference values are under thresholds, stop and continue with next image
-                                                elif dNBR<dNBRthreshold or RdNBR<RdNBRthreshold or NDVIdiff<NDVIdiffThreshold or ratioB5 <ratioB5Threshold:
+                                                elif dNBR<dNBRthreshold or RdNBR<RdNBRthreshold or NDVIdiff<NDVIdiffThreshold or ratioB5>ratioB5Threshold:
                                                     print("dNBR or RdNBR or NDVIdiff under threshold; continue with next image for image 2")
 
                                                 else:  
                                                     #open empty image and set new dNBR and RdNBR and date values in first, second and third band respectively. in ArrayStack, first number is number of band (first is zero) then row then column.
                                                     #if dNBR  or RdNBR values is above value already saved in the array or if current value is empty (nan), overwrite it; else, don't overwrite it
                                                     print ("current dNBR value for this cell in arrayStack: ",arrayStack[cntrForBand][row][col])
-                                                    if (dNBR>arrayStack[cntrForBand][row][col] and RdNBR>arrayStack[cntrForBand+1][row][col] and NDVIdiff>arrayStack[cntrForBand+2][row][col] and ratioB5>arrayStack[cntrForBand+3][row][col]) or (math.isnan(arrayStack[cntrForBand][row][col])):
+                                                    if (dNBR>arrayStack[cntrForBand][row][col] and RdNBR>arrayStack[cntrForBand+1][row][col] and NDVIdiff>arrayStack[cntrForBand+2][row][col] and ratioB5<arrayStack[cntrForBand+3][row][col]) or (math.isnan(arrayStack[cntrForBand][row][col])):
                                                         #keeps dNBR, RdNBR and date value in first, second and third of the three bands (hence cntrForBand for dNBR, cntrForBand+1 for RdNBR and cntrForBand+2 for Date)
                                                         arrayStack[cntrForBand][row][col]= dNBR
                                                         arrayStack[cntrForBand+1][row][col]= RdNBR
